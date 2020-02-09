@@ -1,7 +1,5 @@
 # cs411_group7
 
-## Group 7 Project!!
-
 ### group members: Zhaoguo Zhu, Yinghao Zheng, Yingyun Zhan, Yunhan Huang.
 
 Idea 1: People having difficulties keeping track of their mental health statistics consisting of what they do and how they feel, and they want to find an optimal way of managing their mood. Hence, we came up with the idea of creating a mood tracker application that allows users to enter their daily data on mental health conditions. We want the website to have a calendar view for users to enter their daily data of mood, activities they did, a weather view for users to check daily weather, and a music view that shuffles songs from Spotify playlist. There will be a weather API and a Spotify API.
