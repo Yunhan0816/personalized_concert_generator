@@ -13,16 +13,6 @@ const router = new VueRouter({
       name: "home",
       component: () => import("./views/Home.vue")
     },
-    // {
-    //   path: "/events",
-    //   name: "events",
-    //   component: () => import("./views/Events.vue")
-    // },
-    // {
-    //   path: "/therapy",
-    //   name: "therapy",
-    //   component: () => import("./views/Therapists.vue")
-    // },
 
     {
       path: "/login",

@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
-const firebaseui = require("firebaseui");
-import "firebase/auth";
+// const firebaseui = require("firebaseui");
+// import "firebase/auth";
 import "firebase/firestore";
 
 const config = {
@@ -15,25 +15,26 @@ const config = {
 };
 
 const app = firebase.initializeApp(config);
-const auth = firebase.auth();
+// const auth = firebase.auth();
 const db = app.firestore();
 
-const authUI = new firebaseui.auth.AuthUI(auth);
+// const authUI = new firebaseui.auth.AuthUI(auth);
 
-const authUIConfig = {
-  signInSuccessUrl: "/",
-  signInOptions: [
-    {
-      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID
-    },
-    {
-      provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      customParameters: {
-        prompt: "select_account"
-      }
-    }
-  ]
-};
+// const authUIConfig = {
+//   signInSuccessUrl: "/",
+//   signInOptions: [
+//     {
+//       provider: firebase.auth.EmailAuthProvider.PROVIDER_ID
+//     },
+//     {
+//       provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+//       customParameters: {
+//         prompt: "select_account"
+//       }
+//     }
+//   ]
+// };
 
 export default app;
-export { auth, db, authUI, authUIConfig };
+export { db };
+// export { auth, db, authUI, authUIConfig };
