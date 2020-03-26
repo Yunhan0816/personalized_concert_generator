@@ -118,18 +118,15 @@ app.get("/callback", function(req, res) {
         };
 
         // console.log(access_token);
-
-        // spotifyApi.setAccessToken(access_token);
-
         // use the access token to access the Spotify Web API
         request.get(artists, function(error, response, body) {
-          // console.log(body.items[0].name);
-          var top_list = [];
+          console.log(body.items);
+          var top_name = [];
           for (i = 0; i < body.items.length; i++) {
             artist = body.items[i].name;
-            top_list.push(artist);
+            top_name.push(artist);
           }
-          // console.log(querystring.stringify(top_list));
+          console.log(top_name);
           // var top_list = body.items[0].name;
 
           // we can also pass the token to the browser to make requests from there
@@ -138,7 +135,7 @@ app.get("/callback", function(req, res) {
               querystring.stringify({
                 access_token: access_token,
                 refresh_token: refresh_token,
-                top_list: querystring.stringify(top_list)
+                top_name: top_name
               })
           );
         });
