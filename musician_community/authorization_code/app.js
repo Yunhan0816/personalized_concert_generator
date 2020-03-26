@@ -111,8 +111,8 @@ app.get("/callback", function(req, res) {
         var access_token = body.access_token,
           refresh_token = body.refresh_token;
 
-        var options = {
-          url: "https://api.spotify.com/v1/me",
+        var artists = {
+          url: "https://api.spotify.com/v1/me/top/artists",
           headers: { Authorization: "Bearer " + access_token },
           json: true
         };
@@ -121,20 +121,8 @@ app.get("/callback", function(req, res) {
 
         // spotifyApi.setAccessToken(access_token);
 
-        var topArtists = {
-          url: "https://api.spotify.com/v1/me/top/artists",
-          method: "GET",
-          headers: {
-            Authorization: "Bearer" + access_token
-          },
-          json: true
-        };
         // use the access token to access the Spotify Web API
-        request.get(options, function(error, response, body) {
-          console.log(body);
-        });
-
-        request.get(topArtists, function(error, response, body) {
+        request.get(artists, function(error, response, body) {
           console.log(body);
         });
         // we can also pass the token to the browser to make requests from there
@@ -184,28 +172,28 @@ app.get("/refresh_token", function(req, res) {
   });
 });
 
-app.get("/get-top-artists", function(req, res) {
-  // Do the api req to spotify
-  // var options = {
-  //   url: "https://api.spotify.com/v1/me/top/artists",
-  //   headers: { Authorization: "Bearer " + access_token },
-  //   json: true
-  // };
-  // request.get(options, function(error, response, body) {
-  //   console.log(body);
-  // });
+// app.get("/get-top-artists", function(req, res) {
+//   // Do the api req to spotify
+//   // var options = {
+//   //   url: "https://api.spotify.com/v1/me/top/artists",
+//   //   headers: { Authorization: "Bearer " + access_token },
+//   //   json: true
+//   // };
+//   // request.get(options, function(error, response, body) {
+//   //   console.log(body);
+//   // });
 
-  // use the access token to access the Spotify Web API
+//   // use the access token to access the Spotify Web API
 
-  // wait for response
-  // you now have the json object containig all the relevant info about the top artists
+//   // wait for response
+//   // you now have the json object containig all the relevant info about the top artists
 
-  res.sendFile("topartistspage.html", asdf);
+//   res.sendFile("topartistspage.html", asdf);
 
-  // Do the api req to spotify
-  // wait for response
-  // res.send a json object containig all the relevant info about the top artists
-});
+//   // Do the api req to spotify
+//   // wait for response
+//   // res.send a json object containig all the relevant info about the top artists
+// });
 
 console.log("Listening on 8888");
 app.listen(8888);
