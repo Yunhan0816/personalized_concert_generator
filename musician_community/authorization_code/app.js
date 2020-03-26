@@ -7,14 +7,14 @@
  * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
  */
 
-var SpotifyWebApi = require("spotify-web-api-node");
+// var SpotifyWebApi = require("spotify-web-api-node");
 
-// credentials are optional
-var spotifyApi = new SpotifyWebApi({
-  clientId: "2ad16dcab3504b12a8e1da66110a11e9",
-  clientSecret: "95216a023621488f92bca78c3e4052d2",
-  redirectUri: "http://localhost:8888/callback"
-});
+// // credentials are optional
+// var spotifyApi = new SpotifyWebApi({
+//   clientId: "2ad16dcab3504b12a8e1da66110a11e9",
+//   clientSecret: "95216a023621488f92bca78c3e4052d2",
+//   redirectUri: "http://localhost:8888/callback"
+// });
 
 var express = require("express"); // Express web server framework
 var request = require("request"); // "Request" library
@@ -117,13 +117,15 @@ app.get("/callback", function(req, res) {
           json: true
         };
 
-        spotifyApi.setAccessToken(access_token);
+        console.log(access_token);
+
+        // spotifyApi.setAccessToken(access_token);
+
         var topArtists = {
           url: "https://api.spotify.com/v1/me/top/artists",
+          method: "GET",
           headers: {
-            Accept: "application/json",
-            "content-type": "application/json; charset=utf-8",
-            Authorizatison: "Bearer" + access_token
+            Authorization: "Bearer" + access_token
           },
           json: true
         };
@@ -132,8 +134,8 @@ app.get("/callback", function(req, res) {
           console.log(body);
         });
 
-        request.get(topArtists, function(error, response, artists) {
-          console.log(artists);
+        request.get(topArtists, function(error, response, body) {
+          console.log(body);
         });
         // we can also pass the token to the browser to make requests from there
         res.redirect(
