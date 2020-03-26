@@ -23,7 +23,7 @@
   <body>
     <div class="container">
       <div id="login">
-        <h1>Musician Community - Spotify Log In</h1>
+        <h1>Musician Community - Spotify Log</h1>
         <a href="/login" class="btn btn-primary">Log in with Spotify</a>
       </div>
       <div id="loggedin">
@@ -81,6 +81,7 @@
           }
           return hashParams;
         }
+        // var obj = JSON.parse();
 
         var userProfileSource = document.getElementById("user-profile-template")
             .innerHTML,
@@ -95,7 +96,10 @@
 
         var access_token = params.access_token,
           refresh_token = params.refresh_token,
+          top_artists = params.top_list,
           error = params.error;
+
+        console.log("HANNAH LIKES", top_artists);
 
         if (error) {
           alert("There was an error during the authentication");
