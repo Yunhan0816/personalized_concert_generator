@@ -6,6 +6,16 @@
  * For more information, read
  * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
  */
+
+var SpotifyWebApi = require("spotify-web-api-node");
+
+// credentials are optional
+var spotifyApi = new SpotifyWebApi({
+  clientId: "2ad16dcab3504b12a8e1da66110a11e9",
+  clientSecret: "95216a023621488f92bca78c3e4052d2",
+  redirectUri: "http://localhost:8888/callback"
+});
+
 var express = require("express"); // Express web server framework
 var request = require("request"); // "Request" library
 var cors = require("cors");
@@ -106,6 +116,8 @@ app.get("/callback", function(req, res) {
           headers: { Authorization: "Bearer " + access_token },
           json: true
         };
+
+        spotifyApi.setAccessToken(access_token);
         var topArtists = {
           url: "https://api.spotify.com/v1/me/top/artists",
           headers: {
