@@ -126,6 +126,8 @@ app.get("/callback", function(req, res) {
             artist = body.items[i].name;
             top_name.push(artist);
           }
+          var string_artists = top_name.join();
+          console.log(string_artists);
           console.log(top_name);
           // var top_list = body.items[0].name;
 
@@ -135,7 +137,7 @@ app.get("/callback", function(req, res) {
               querystring.stringify({
                 access_token: access_token,
                 refresh_token: refresh_token,
-                top_name: top_name
+                top_name: string_artists
               })
           );
         });

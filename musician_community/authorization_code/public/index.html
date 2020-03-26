@@ -57,11 +57,11 @@
     </script>
 
     <script id="oauth-template" type="text/x-handlebars-template">
-      <h2>oAuth info</h2>
+      <h2>oAuth and API info</h2>
       <dl class="dl-horizontal">
         <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
         <dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}</dd>
-        <dt>Top Artists</dt><dd class="text-overflow">{{top_artists}}</dd>
+        <dt >Top Artists</dt><dd id = "artist_style" class="text-overflow">{{top_artists}}</dd>
 
       </dl>
     </script>
@@ -167,4 +167,10 @@
       })();
     </script>
   </body>
+
+  <style>
+    #artist_style {
+      width: 2000px;
+    }
+  </style>
 </html>
