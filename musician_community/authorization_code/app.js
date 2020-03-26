@@ -129,8 +129,7 @@ app.get("/callback", function(req, res) {
             artist = body.items[i].name;
             top_list.push(artist);
           }
-          console.log(top_list);
-          console.log(querystring.stringify(top_list));
+          // console.log(querystring.stringify(top_list));
           // var top_list = body.items[0].name;
 
           // we can also pass the token to the browser to make requests from there
@@ -139,7 +138,7 @@ app.get("/callback", function(req, res) {
               querystring.stringify({
                 access_token: access_token,
                 refresh_token: refresh_token,
-                top_list: top_list
+                top_list: querystring.stringify(top_list)
               })
           );
         });

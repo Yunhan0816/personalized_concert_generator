@@ -81,8 +81,6 @@
           }
           return hashParams;
         }
-        // var obj = JSON.parse();
-
         var userProfileSource = document.getElementById("user-profile-template")
             .innerHTML,
           userProfileTemplate = Handlebars.compile(userProfileSource),
@@ -98,9 +96,10 @@
           refresh_token = params.refresh_token,
           top_artists = params.top_list,
           error = params.error;
+        // console.log(JSON.stringify(top_artists));
 
         console.log("HANNAH LIKES", top_artists);
-
+        // console.log(JSON.parse(top_artists));
         if (error) {
           alert("There was an error during the authentication");
         } else {
