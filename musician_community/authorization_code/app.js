@@ -12,7 +12,7 @@
 // // credentials are optional
 // var spotifyApi = new SpotifyWebApi({
 //   clientId: "2ad16dcab3504b12a8e1da66110a11e9",
-//   clientSecret: "",
+//   clientSecret: "95216a023621488f92bca78c3e4052d2",
 //   redirectUri: "http://localhost:8888/callback"
 // });
 
@@ -23,7 +23,7 @@ var querystring = require("querystring");
 var cookieParser = require("cookie-parser");
 
 var client_id = "2ad16dcab3504b12a8e1da66110a11e9"; // Your client id
-var client_secret = ""; // Your secret
+var client_secret = "95216a023621488f92bca78c3e4052d2"; // Your secret
 var redirect_uri = "http://localhost:8888/callback"; // Your redirect uri
 const path = require("path");
 /**
