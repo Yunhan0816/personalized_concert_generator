@@ -146,7 +146,7 @@
           <!-- Put event table here -->
           <table style="width:100%" id="myTable">
             <tr id="tr">
-              <th>Event ID</th>
+              <!-- <th>Event ID</th> -->
               <th>Event Title</th>
               <th>Event Type</th>
               <th>Event Status</th>
@@ -401,7 +401,7 @@
                 var allex = eventRef.get().then((snapshot) => {
                   snapshot.forEach((doc) => {
                     content += "<tr>";
-                    content += "<td>" + doc.data().event_id + "</td>";
+                    // content += "<td>" + doc.data().event_id + "</td>";
                     content += "<td>" + doc.data().event_name + "</td>";
                     content += "<td>" + doc.data().event_type + "</td>";
                     content += "<td>" + doc.data().event_status + "</td>";
