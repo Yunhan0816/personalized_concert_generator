@@ -298,18 +298,6 @@
           topArtists: top_artists,
         });
       });
-
-      // const firestore = firebase.firestore();
-      // const settings = { /* your settings... */ timestampsInSnapshots: true };
-      // firestore.settings(settings);
-      // const db = firebase.firestore();
-      // // console.log(document.getElementById("target"));
-      // console.log("adding data");
-
-      // const users = db.collection("users");
-      // db.collection("users").doc(uID).add({
-      //   topArtists: top_artists,
-      // });
     </script>
   </body>
 
@@ -319,27 +307,3 @@
     }
   </style>
 </html>
-<!-- 
-<script>
-  import { db } from "musician_community/authorization_code/firebase/init.js";
-  export default {
-    async mounted() {
-      this.addData();
-    },
-    data() {
-      return {
-        artistList: "",
-      };
-    },
-    methods: {
-      async addData() {
-        console.log("adding data..");
-        db.collection("users").add({
-          first: "Ada",
-          last: "Lovelace",
-          born: 1815,
-        });
-      },
-    },
-  };
-</script> -->
