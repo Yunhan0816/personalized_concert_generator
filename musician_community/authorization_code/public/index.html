@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8" />
+    <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
     <title>Spotify Log In</title>
     <link
       rel="stylesheet"
@@ -23,59 +25,164 @@
   <body>
     <div class="container">
       <div id="login">
-        <h1>Musician Community - Spotify Log</h1>
+        <h1>Personalized Concert Generator - Spotify Log In</h1>
         <a href="/login" class="btn btn-primary">Log in with Spotify</a>
       </div>
       <div id="loggedin">
         <div id="user-profile"></div>
         <div id="oauth"></div>
-        <div id="artists"></div>
+
         <button class="btn btn-default" id="obtain-new-token">
           Obtain new token using the refresh token
         </button>
+        <br />
+        <br />
+
+        <div id="top-artist"></div>
       </div>
     </div>
 
     <script id="user-profile-template" type="text/x-handlebars-template">
-      <h1>Logged in as {{display_name}}</h1>
+      <h1>
+        Logged in as {{display_name}}
+      </h1>
       <div class="media">
         <div class="pull-left">
           <img class="media-object" width="150" src="{{images.0.url}}" />
         </div>
         <div class="media-body">
           <dl class="dl-horizontal">
-            <dt>Display name</dt><dd class="clearfix">{{display_name}}</dd>
-            <dt>Id</dt><dd>{{id}}</dd>
-            <dt>Email</dt><dd>{{email}}</dd>
-            <dt>Spotify URI</dt><dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
-            <dt>Link</dt><dd><a href="{{href}}">{{href}}</a></dd>
-            <dt>Profile Image</dt><dd class="clearfix"><a href="{{images.0.url}}">{{images.0.url}}</a></dd>
-            <dt>Country</dt><dd>{{country}}</dd>
+            <dt>
+              Display name
+            </dt>
+            <dd class="clearfix">
+              {{display_name}}
+            </dd>
+            <dt>
+              Id
+            </dt>
+            <dd>
+              {{id}}
+            </dd>
+            <dt>
+              Email
+            </dt>
+            <dd>
+              {{email}}
+            </dd>
+            <dt>
+              Spotify URI
+            </dt>
+            <dd>
+              <a href="{{external_urls.spotify}}">
+                {{external_urls.spotify}}
+              </a>
+            </dd>
+            <dt>
+              Link
+            </dt>
+            <dd>
+              <a href="{{href}}">
+                {{href}}
+              </a>
+            </dd>
+            <dt>
+              Profile Image
+            </dt>
+            <dd class="clearfix">
+              <a href="{{images.0.url}}">
+                {{images.0.url}}
+              </a>
+            </dd>
+            <dt>
+              Country
+            </dt>
+            <dd>
+              {{country}}
+            </dd>
           </dl>
         </div>
       </div>
     </script>
 
     <script id="oauth-template" type="text/x-handlebars-template">
-      <h2>oAuth and API info</h2>
+      <h2>
+        oAuth and API info
+      </h2>
       <dl class="dl-horizontal">
-        <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
-        <dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}</dd>
-        <dt >Top Artists</dt><dd id = "artist_style" class="text-overflow">{{top_artists}}</dd>
-
+        <dt>
+          Access token
+        </dt>
+        <dd class="text-overflow">
+          {{access_token}}
+        </dd>
+        <dt>
+          Refresh token
+        </dt>
+        <dd class="text-overflow">
+          {{refresh_token}}
+        </dd>
+        <!-- <dt>
+          Top Artists
+        </dt>
+        <dd id="artist_style" class="text-overflow">
+          {{top_artists}}
+        </dd> -->
       </dl>
     </script>
-    <!-- <script id="top-artist-template" type="text/x-handlebars-template">
-      <h2>Top Artists info</h2>
-      <dl class="dl-horizontal">
-        <dt>Top Artists</dt><dd class="text-overflow">{{top_artists}}</dd>
-      </dl>
-    </script> -->
+    <script id="top-artist-template" type="text/x-handlebars-template">
+      <dt>
+        Top Artists
+      </dt>
+      <dd >
+        {{top_artists}}
+      </dd>
+      <br />
+      <div id="getTicket">
+        <h2>
+          Get my personalized ticket
+        </h2>
+        <a href="/sup" class="btn btn-primary">
+          Start Now
+        </a>
+        <h1>Firebase example</h1>
+    <pre id='data'></pre>
+    <script src="script.js"></script>
+      </div>
 
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+    <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyD3Kb2A0JuBHKRZbj53eEQ1IraEWBqe6Ow",
+  authDomain: "musician-community.firebaseapp.com",
+  databaseURL: "https://musician-community.firebaseio.com",
+  projectId: "musician-community",
+  storageBucket: "musician-community.appspot.com",
+  messagingSenderId: "415060047558",
+  appId: "1:415060047558:web:fa2be6e6e86482e834c9c7",
+  measurementId: "G-4N61CZSXP7"
+    };
+    firebase.initializeApp(config);
+    </script>
+    <script>
+        const firestore = firebase.firestore();
+  const settings = {/* your settings... */ timestampsInSnapshots: true};
+  firestore.settings(settings);
+        const db = firebase.firestore();
+        console.log("adding data");
+        const users = db.collection("users");
+        db.collection("users").add({
+          topArtists: document.getElementById("top-artist").innerHTML
+          
+        });
+    </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+   
     <script>
-      (function() {
+      (function () {
         /**
          * Obtains parameters from the hash of the URL
          * @return Object
@@ -99,10 +206,10 @@
           oauthTemplate = Handlebars.compile(oauthSource),
           oauthPlaceholder = document.getElementById("oauth");
 
-        // var topArtistsSource = document.getElementById("top-artist-template")
-        //     .innerHTML,
-        //   topArtistsSource = Handlebars.compile(topArtistsSource),
-        //   userProfilePlaceholder = document.getElementById("artists");
+        var topArtistsSource = document.getElementById("top-artist-template")
+            .innerHTML,
+          topArtistTemplate = Handlebars.compile(topArtistsSource),
+          topArtistPlaceholder = document.getElementById("top-artist");
 
         var params = getHashParams();
 
@@ -112,7 +219,7 @@
           error = params.error;
         // console.log(JSON.stringify(top_artists));
 
-        console.log("HANNAH LIKES", top_artists);
+        console.log("USER LIKES", top_artists);
         // console.log(JSON.parse(top_artists));
         if (error) {
           alert("There was an error during the authentication");
@@ -122,22 +229,25 @@
             oauthPlaceholder.innerHTML = oauthTemplate({
               access_token: access_token,
               refresh_token: refresh_token,
-              top_artists: top_artists
+              // top_artists: top_artists,
             });
 
             $.ajax({
               url: "https://api.spotify.com/v1/me",
               headers: {
-                Authorization: "Bearer " + access_token
+                Authorization: "Bearer " + access_token,
               },
-              success: function(response) {
+              success: function (response) {
                 userProfilePlaceholder.innerHTML = userProfileTemplate(
                   response
                 );
+                topArtistPlaceholder.innerHTML = topArtistTemplate({
+                  top_artists: top_artists,
+                });
 
                 $("#login").hide();
                 $("#loggedin").show();
-              }
+              },
             });
           } else {
             // render initial screen
@@ -145,19 +255,21 @@
             $("#loggedin").hide();
           }
 
+          console.log(document.getElementById("artist_style"));
+
           document.getElementById("obtain-new-token").addEventListener(
             "click",
-            function() {
+            function () {
               $.ajax({
                 url: "/refresh_token",
                 data: {
-                  refresh_token: refresh_token
-                }
-              }).done(function(data) {
+                  refresh_token: refresh_token,
+                },
+              }).done(function (data) {
                 access_token = data.access_token;
                 oauthPlaceholder.innerHTML = oauthTemplate({
                   access_token: access_token,
-                  refresh_token: refresh_token
+                  refresh_token: refresh_token,
                 });
               });
             },
@@ -174,3 +286,27 @@
     }
   </style>
 </html>
+<!-- 
+<script>
+  import { db } from "musician_community/authorization_code/firebase/init.js";
+  export default {
+    async mounted() {
+      this.addData();
+    },
+    data() {
+      return {
+        artistList: "",
+      };
+    },
+    methods: {
+      async addData() {
+        console.log("adding data..");
+        db.collection("users").add({
+          first: "Ada",
+          last: "Lovelace",
+          born: 1815,
+        });
+      },
+    },
+  };
+</script> -->

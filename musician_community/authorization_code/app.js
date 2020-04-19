@@ -7,14 +7,27 @@
  * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
  */
 
-// var SpotifyWebApi = require("spotify-web-api-node");
+// var firebase = require("firebase/app");
 
-// // credentials are optional
-// var spotifyApi = new SpotifyWebApi({
-//   clientId: "2ad16dcab3504b12a8e1da66110a11e9",
-//   clientSecret: "95216a023621488f92bca78c3e4052d2",
-//   redirectUri: "http://localhost:8888/callback"
-// });
+// // Add the Firebase products that you want to use
+// require("firebase/firestore");
+// var firebaseConfig = {
+//   apiKey: "AIzaSyD3Kb2A0JuBHKRZbj53eEQ1IraEWBqe6Ow",
+//   authDomain: "musician-community.firebaseapp.com",
+//   databaseURL: "https://musician-community.firebaseio.com",
+//   projectId: "musician-community",
+//   storageBucket: "musician-community.appspot.com",
+//   messagingSenderId: "415060047558",
+//   appId: "1:415060047558:web:fa2be6e6e86482e834c9c7",
+//   measurementId: "G-4N61CZSXP7",
+// };
+
+// // Initialize Firebase
+// firebase.initializeApp(firebaseConfig);
+
+// const db = app.firestore();
+
+// export { db };
 
 var express = require("express"); // Express web server framework
 var request = require("request"); // "Request" library
@@ -31,7 +44,7 @@ const path = require("path");
  * @param  {number} length The length of the string
  * @return {string} The generated string
  */
-var generateRandomString = function(length) {
+var generateRandomString = function (length) {
   var text = "";
   var possible =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -52,7 +65,7 @@ app
   .use(cors())
   .use(cookieParser());
 
-app.get("/login", function(req, res) {
+app.get("/login", function (req, res) {
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
 
@@ -65,16 +78,16 @@ app.get("/login", function(req, res) {
         client_id: client_id,
         scope: scope,
         redirect_uri: redirect_uri,
-        state: state
+        state: state,
       })
   );
 });
 
-app.get("/sup", function(req, res) {
+app.get("/sup", function (req, res) {
   res.sendFile(path.join(__dirname + "/public/sup.html"));
 });
 
-app.get("/callback", function(req, res) {
+app.get("/callback", function (req, res) {
   // your application requests refresh and access tokens
   // after checking the state parameter
 
@@ -86,7 +99,7 @@ app.get("/callback", function(req, res) {
     res.redirect(
       "/#" +
         querystring.stringify({
-          error: "state_mismatch"
+          error: "state_mismatch",
         })
     );
   } else {
@@ -96,17 +109,17 @@ app.get("/callback", function(req, res) {
       form: {
         code: code,
         redirect_uri: redirect_uri,
-        grant_type: "authorization_code"
+        grant_type: "authorization_code",
       },
       headers: {
         Authorization:
           "Basic " +
-          new Buffer(client_id + ":" + client_secret).toString("base64")
+          new Buffer(client_id + ":" + client_secret).toString("base64"),
       },
-      json: true
+      json: true,
     };
 
-    request.post(authOptions, function(error, response, body) {
+    request.post(authOptions, function (error, response, body) {
       if (!error && response.statusCode === 200) {
         var access_token = body.access_token,
           refresh_token = body.refresh_token;
@@ -114,12 +127,12 @@ app.get("/callback", function(req, res) {
         var artists = {
           url: "https://api.spotify.com/v1/me/top/artists",
           headers: { Authorization: "Bearer " + access_token },
-          json: true
+          json: true,
         };
 
         // console.log(access_token);
         // use the access token to access the Spotify Web API
-        request.get(artists, function(error, response, body) {
+        request.get(artists, function (error, response, body) {
           console.log(body.items);
           var top_name = [];
           for (i = 0; i < body.items.length; i++) {
@@ -137,7 +150,7 @@ app.get("/callback", function(req, res) {
               querystring.stringify({
                 access_token: access_token,
                 refresh_token: refresh_token,
-                top_name: string_artists
+                top_name: string_artists,
               })
           );
         });
@@ -145,7 +158,7 @@ app.get("/callback", function(req, res) {
         res.redirect(
           "/#" +
             querystring.stringify({
-              error: "invalid_token"
+              error: "invalid_token",
             })
         );
       }
@@ -153,7 +166,7 @@ app.get("/callback", function(req, res) {
   }
 });
 
-app.get("/refresh_token", function(req, res) {
+app.get("/refresh_token", function (req, res) {
   // requesting access token from refresh token
   var refresh_token = req.query.refresh_token;
   var authOptions = {
@@ -161,20 +174,20 @@ app.get("/refresh_token", function(req, res) {
     headers: {
       Authorization:
         "Basic " +
-        new Buffer(client_id + ":" + client_secret).toString("base64")
+        new Buffer(client_id + ":" + client_secret).toString("base64"),
     },
     form: {
       grant_type: "refresh_token",
-      refresh_token: refresh_token
+      refresh_token: refresh_token,
     },
-    json: true
+    json: true,
   };
 
-  request.post(authOptions, function(error, response, body) {
+  request.post(authOptions, function (error, response, body) {
     if (!error && response.statusCode === 200) {
       var access_token = body.access_token;
       res.send({
-        access_token: access_token
+        access_token: access_token,
       });
     }
   });
