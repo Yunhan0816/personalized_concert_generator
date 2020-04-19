@@ -285,7 +285,7 @@
         //   var uID = response.id;
         // },
       }).then((response) => {
-        console.log(response);
+        // console.log(response);
         var displayName = response.display_name;
         var url = response.external_urls;
         var follower = response.followers;
@@ -304,6 +304,74 @@
           displayName: displayName,
           url: url.spotify,
           follower: follower,
+        });
+        let performers;
+        let userRef = db.collection("users").doc(uID);
+        let getDoc = userRef.get().then((doc) => {
+          if (!doc.exists) {
+            console.log("No such document!");
+          } else {
+            console.log("Document data:", doc.data());
+            performers = doc.data().topArtists;
+          }
+          console.log(performers);
+          for (let i = 0; i < performers.length; i++) {
+            performers[i] = performers[i].toLowerCase();
+            if (performers[i].indexOf(" ") != -1) {
+              performers[i] = performers[i].replace(/\s+/g, "-");
+              // console.log("changed to dash!", performers[i]);
+            }
+          }
+          console.log(performers);
+          client_id = "MjExNDQzMDZ8MTU4NTM1Mjc1OC40Mg";
+
+          for (let i = 0; i < performers.length; i++) {
+            $.ajax({
+              url:
+                "https://api.seatgeek.com/2/events?client_id=MjExNDQzMDZ8MTU4NTM1Mjc1OC40Mg&performers.slug=" +
+                performers[i],
+              headers: {
+                // params: {
+                //   client_id: client_id,
+                // },
+                // Authorization: "Bearer " + access_token,
+              },
+              // success: function (response) {
+              //   console.log(response);
+              // },
+            }).then((response) => {
+              if (response.events.length == 0) {
+                console.log("No Events for this artist!");
+              } else {
+                for (let i = 0; i < response.events.length; i++) {
+                  var event_id = response.events[i].id;
+                  var event_name = response.events[i].title;
+                  var event_type = response.events[i].type;
+                  var event_status = response.events[i].status;
+                  var event_time = response.events[i].datetime_local;
+                  var event_venue = response.events[i].venue;
+                  console.log(event_id);
+                  console.log(event_name);
+                  // console.log(event_type);
+                  // console.log(event_status);
+                  // console.log(event_time);
+                  // console.log(event_venue);
+                }
+                console.log(response.events);
+                db.collection("users")
+                  .doc(uID)
+                  .collection("events")
+                  .doc(event_id.toString())
+                  .set({
+                    event_name: event_name,
+                    event_type: event_type,
+                    event_status: event_status,
+                    event_time: event_time,
+                    event_venue: event_venue,
+                  });
+              }
+            });
+          }
         });
       });
     </script>

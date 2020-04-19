@@ -85,6 +85,9 @@ app.get("/login", function (req, res) {
 
 app.get("/sup", function (req, res) {
   res.sendFile(path.join(__dirname + "/public/sup.html"));
+
+  // https://api.seatgeek.com/2/events?client_id=MjExNDQzMDZ8MTU4NTM1Mjc1OC40Mg&performers.slug=
+  //https://api.seatgeek.com/2/events?client_id=MjExNDQzMDZ8MTU4NTM1Mjc1OC40Mg&performers.slug=the-strokes
 });
 
 app.get("/callback", function (req, res) {
