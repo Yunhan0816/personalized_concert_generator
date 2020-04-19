@@ -273,17 +273,43 @@
       var params = getHashParams();
       var top_artists = params.top_name;
       top_artists = top_artists.split(",");
+      var access_token = params.access_token;
 
-      const firestore = firebase.firestore();
-      const settings = { /* your settings... */ timestampsInSnapshots: true };
-      firestore.settings(settings);
-      const db = firebase.firestore();
-      // console.log(document.getElementById("target"));
-      console.log("adding data");
-      const users = db.collection("users");
-      db.collection("users").add({
-        topArtists: top_artists,
+      $.ajax({
+        url: "https://api.spotify.com/v1/me",
+        headers: {
+          Authorization: "Bearer " + access_token,
+        },
+        // success: function (response) {
+        //   console.log(response.id);
+        //   var uID = response.id;
+        // },
+      }).then((response) => {
+        var uID = response.id;
+        const firestore = firebase.firestore();
+        const settings = { /* your settings... */ timestampsInSnapshots: true };
+        firestore.settings(settings);
+        const db = firebase.firestore();
+        // console.log(document.getElementById("target"));
+        console.log("adding data");
+
+        const users = db.collection("users");
+        db.collection("users").doc(uID).set({
+          topArtists: top_artists,
+        });
       });
+
+      // const firestore = firebase.firestore();
+      // const settings = { /* your settings... */ timestampsInSnapshots: true };
+      // firestore.settings(settings);
+      // const db = firebase.firestore();
+      // // console.log(document.getElementById("target"));
+      // console.log("adding data");
+
+      // const users = db.collection("users");
+      // db.collection("users").doc(uID).add({
+      //   topArtists: top_artists,
+      // });
     </script>
   </body>
 
