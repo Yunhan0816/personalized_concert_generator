@@ -9,4 +9,6 @@
 #### Sequence Diagram:
 
 ![screenshot](sequence_diagram.png)
-![screenshot](database.png)
+![screenshot](database1.png)
+![screenshot](database2.png)
+![screenshot](database3.png)
