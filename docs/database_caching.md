@@ -18,8 +18,8 @@ After that, I let the db add another collection inside of each user's document e
 
 ![screenshot](sequence_diagram.png)
 
-
 ## Database structure:
+
 ![screenshot](database1.png)
 ![screenshot](database2.png)
 ![screenshot](database3.png)

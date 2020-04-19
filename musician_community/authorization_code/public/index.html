@@ -138,10 +138,38 @@
         <h2>
           Get my personalized ticket
         </h2>
-        <a href="/sup" class="btn btn-primary">
+        <button onclick="myFunction()">
+          Click Me
+        </button>
+
+        <div id="myDIV">
+          <!-- Put event table here -->
+          <table style="width:100%" id="myTable">
+            <tr id="tr">
+              <th>Event ID</th>
+              <th>Event Title</th>
+              <th>Event Type</th>
+              <th>Event Status</th>
+              <th>Event Time</th>
+              <th>Event Venue</th>
+              <th>Buy Ticket</th>
+           </table>
+        </div>
+        <!-- <a href="/sup" class="btn btn-primary">
           Start Now
-        </a>
+        </a> -->
       </div>
+    </script>
+
+    <script>
+      function myFunction() {
+        var x = document.getElementById("myDIV");
+        if (x.style.display === "block") {
+          x.style.display = "none";
+        } else {
+          x.style.display = "block";
+        }
+      }
     </script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
@@ -334,41 +362,90 @@
                 // params: {
                 //   client_id: client_id,
                 // },
-                // Authorization: "Bearer " + access_token,
               },
-              // success: function (response) {
-              //   console.log(response);
-              // },
             }).then((response) => {
               if (response.events.length == 0) {
                 console.log("No Events for this artist!");
               } else {
+                var event_ids = [];
                 for (let i = 0; i < response.events.length; i++) {
                   var event_id = response.events[i].id;
+                  event_ids.push(event_id);
                   var event_name = response.events[i].title;
                   var event_type = response.events[i].type;
                   var event_status = response.events[i].status;
                   var event_time = response.events[i].datetime_local;
                   var event_venue = response.events[i].venue;
-                  console.log(event_id);
-                  console.log(event_name);
-                  // console.log(event_type);
-                  // console.log(event_status);
-                  // console.log(event_time);
-                  // console.log(event_venue);
+                  var event_url = response.events[i].venue.url;
                 }
-                console.log(response.events);
+                // console.log(response.events);
+                console.log(event_ids);
                 db.collection("users")
                   .doc(uID)
                   .collection("events")
                   .doc(event_id.toString())
                   .set({
+                    event_id: event_id,
                     event_name: event_name,
                     event_type: event_type,
                     event_status: event_status,
                     event_time: event_time,
                     event_venue: event_venue,
+                    event_url: event_url,
                   });
+                var content = "";
+                var eventRef = db
+                  .collection("users")
+                  .doc(uID)
+                  .collection("events");
+                var allex = eventRef.get().then((snapshot) => {
+                  snapshot.forEach((doc) => {
+                    content += "<tr>";
+                    content += "<td>" + doc.data().event_id + "</td>";
+                    content += "<td>" + doc.data().event_name + "</td>";
+                    content += "<td>" + doc.data().event_type + "</td>";
+                    content += "<td>" + doc.data().event_status + "</td>";
+                    content += "<td>" + doc.data().event_time + "</td>";
+
+                    content +=
+                      "<td>" +
+                      doc.data().event_venue.extended_address +
+                      "</td>";
+                    content += "<td>" + doc.data().event_url + "</td>";
+                  });
+                  $("#myTable").append(content);
+                });
+
+                // let eventRef = db
+                //   .collection("users")
+                //   .doc(uID)
+                //   .collection("events")
+                //   .doc(event_id.toString());
+                // console.log(eventRef);
+                // let getEventDoc = eventRef
+                //   .get()
+                //   .then((doc) => {
+                //     if (!doc.exists) {
+                //       console.log("No such event!");
+                //     } else {
+                //       var content = "";
+                //       console.log("Event data:", doc.data());
+                //       doc.forEach(function (data) {
+                //         var val = data.val();
+                //         content += "<tr>";
+                //         content += "<td>" + val.event_id + "</td>";
+                //         content += "<td>" + val.event_name + "</td>";
+                //         content += "<td>" + val.event_type + "</td>";
+                //         content += "<td>" + val.event_status + "</td>";
+                //         content += "<td>" + val.event_time + "</td>";
+                //         content += "<td>" + val.event_venue + "</td>";
+                //       });
+                //       $("#myTable").append(content);
+                //     }
+                //   })
+                //   .catch((err) => {
+                //     console.log("Error getting document", err);
+                //   });
               }
             });
           }
@@ -380,6 +457,9 @@
   <style>
     #artist_style {
       width: 2000px;
+    }
+    #myDIV {
+      display: none;
     }
   </style>
 </html>
