@@ -8,15 +8,5 @@
 
 #### Sequence Diagram:
 
-```mermaid
-sequenceDiagram
-Application ->> Spotify Accounts Service: Request Authorization to access data
-Spotify Accounts Service->>User: Display scopes and prompt users to login
-User ->> Spotify Accounts Service: Redirect the user to the application, passing access token
-Spotify Accounts Service->>Application: User Access token in requests to Web API
-User ->> Database: Login, Website then store obtained user data from calling spotify API
-
-
-```
-
+![screenshot](sequence_diagram.png)
 ![screenshot](database.png)
