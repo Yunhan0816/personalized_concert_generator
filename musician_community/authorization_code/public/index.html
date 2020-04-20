@@ -43,15 +43,19 @@
       </div>
       <div id="loggedin">
         <div id="user-profile"></div>
-        <div id="oauth"></div>
 
-        <button class="btn btn-default" id="obtain-new-token">
-          Obtain new token using the refresh token
-        </button>
         <br />
         <br />
 
         <div id="top-artist"></div>
+        <div id="oauth"></div>
+        <div style="text-align: center;">
+          <button class="btn btn-default" id="obtain-new-token">
+            Obtain new token using the refresh token
+          </button>
+        </div>
+        <br />
+        <br />
       </div>
     </div>
 
@@ -138,27 +142,36 @@
       </dl>
     </script>
     <script id="top-artist-template" type="text/x-handlebars-template">
-      <dt>
+      <dt style="font-size: 25px; text-align: center">
         Top Artists
       </dt>
+      <div style="text-align: center;">
+        <button onclick="showTopArtist()" style="width:200px; height: 50px;">
+       Get Your List of Top Artists
+      </button>
+
       <dd>
-        <div id="target">
+        <div id="target" style="font-size: 20px; color:rgb(255, 255, 255)">
           {{top_artists}}
         </div>
       </dd>
       <br />
       <div id="getTicket">
-        <h2>
-          Get my personalized ticket
+        <h2 style="text-align: center; color:rgb(0, 0, 0)">
+          Get My Personalized Ticket
         </h2>
-        <button onclick="myFunction()">
+        <div style="text-align: center;">
+          <button onclick="myFunction()" style="width:100px; height: 50px;">
           Click Me
         </button>
+
+        </div>
+
 
         <div id="myDIV">
           <!-- Put event table here -->
           <table style="width:100%; color: rgb(255, 255, 255)" id="myTable" >
-            <tr id="tr">
+            <tr id="tr" style="font-size: 20px;">
               <!-- <th>Event ID</th> -->
               <th>Event Title</th>
               <th>Event Type</th>
@@ -177,6 +190,15 @@
     <script>
       function myFunction() {
         var x = document.getElementById("myDIV");
+        if (x.style.display === "block") {
+          x.style.display = "none";
+        } else {
+          x.style.display = "block";
+        }
+      }
+      function showTopArtist() {
+        var x = document.getElementById("target");
+        console.log(x);
         if (x.style.display === "block") {
           x.style.display = "none";
         } else {
@@ -479,6 +501,9 @@
       width: 2000px;
     }
     #myDIV {
+      display: none;
+    }
+    #target {
       display: none;
     }
   </style>
