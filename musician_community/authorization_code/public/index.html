@@ -75,12 +75,7 @@
             <dd class="clearfix">
               {{display_name}}
             </dd>
-            <dt>
-              Id
-            </dt>
-            <dd>
-              {{id}}
-            </dd>
+
             <dt>
               Email
             </dt>
@@ -95,17 +90,15 @@
                 {{external_urls.spotify}}
               </a>
             </dd>
-            <dt>
+            <!-- <dt>
               Link
-            </dt>
-            <dd>
+            </dt> -->
+            <!-- <dd>
               <a href="{{href}}">
                 {{href}}
               </a>
-            </dd>
-            <dt>
-              Profile Image
-            </dt>
+            </dd> -->
+
             <dd class="clearfix">
               <a href="{{images.0.url}}">
                 {{images.0.url}}
@@ -151,7 +144,7 @@
       </button>
 
       <dd>
-        <div id="target" style="font-size: 20px; color:rgb(255, 255, 255)">
+        <div id="artistresult" style="font-size: 20px; color:rgb(255, 255, 255)">
           {{top_artists}}
         </div>
       </dd>
@@ -197,7 +190,7 @@
         }
       }
       function showTopArtist() {
-        var x = document.getElementById("target");
+        var x = document.getElementById("artistresult");
         console.log(x);
         if (x.style.display === "block") {
           x.style.display = "none";
@@ -437,59 +430,34 @@
                   snapshot.forEach((doc) => {
                     content += "<tr>";
                     // content += "<td>" + doc.data().event_id + "</td>";
-                    content += "<td>" + doc.data().event_name + "</td>";
-                    content += "<td>" + doc.data().event_type + "</td>";
-                    content += "<td>" + doc.data().event_status + "</td>";
-                    content += "<td>" + doc.data().event_time + "</td>";
+                    content +=
+                      "<td id='eventname'>" + doc.data().event_name + "</td>";
+                    content +=
+                      "<td id='eventtype'>" + doc.data().event_type + "</td>";
+                    content +=
+                      "<td id='eventstatus'>" +
+                      doc.data().event_status +
+                      "</td>";
+                    content +=
+                      "<td id='eventtime'>" + doc.data().event_time + "</td>";
 
                     content +=
-                      "<td>" +
+                      "<td id='eventaddress'>" +
                       doc.data().event_venue.extended_address +
                       "</td>";
                     content +=
-                      "<td>" +
+                      "<td id='eventlink'>" +
                       "<a href='" +
                       doc.data().event_url +
                       "'>" +
                       "<button>" +
-                      "Click Here To RSVP" +
+                      "Go To SeatGeek To RSVP" +
                       "</button>" +
                       "</a>" +
                       "</td>";
                   });
                   $("#myTable").append(content);
                 });
-
-                // let eventRef = db
-                //   .collection("users")
-                //   .doc(uID)
-                //   .collection("events")
-                //   .doc(event_id.toString());
-                // console.log(eventRef);
-                // let getEventDoc = eventRef
-                //   .get()
-                //   .then((doc) => {
-                //     if (!doc.exists) {
-                //       console.log("No such event!");
-                //     } else {
-                //       var content = "";
-                //       console.log("Event data:", doc.data());
-                //       doc.forEach(function (data) {
-                //         var val = data.val();
-                //         content += "<tr>";
-                //         content += "<td>" + val.event_id + "</td>";
-                //         content += "<td>" + val.event_name + "</td>";
-                //         content += "<td>" + val.event_type + "</td>";
-                //         content += "<td>" + val.event_status + "</td>";
-                //         content += "<td>" + val.event_time + "</td>";
-                //         content += "<td>" + val.event_venue + "</td>";
-                //       });
-                //       $("#myTable").append(content);
-                //     }
-                //   })
-                //   .catch((err) => {
-                //     console.log("Error getting document", err);
-                //   });
               }
             });
           }
@@ -505,7 +473,7 @@
     #myDIV {
       display: none;
     }
-    #target {
+    #artistresult {
       display: none;
     }
   </style>
